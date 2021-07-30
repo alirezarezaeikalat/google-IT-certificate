@@ -1,0 +1,38 @@
+1. hub: 
+
+    The purpose of hub is to connect all of your network devices together on an internal network with ethernet to its port. hub 
+    is not intelligent, because it does not filter any data or has intelligence as where data is supposed to sent. when a packet 
+    comes to a port, hub copies the packet to all other ports.
+
+2. Switch
+
+    Switch is just like hub, but it is intelligent a switch can learn a physical address (MAC address) of connected devices,
+    and send data to denstined device. 
+
+[ATTENTION]
+hubs and switches are for local network, but if you want to connect to internet, you need router.
+
+3. Router
+
+      a router is a device that routes or forward data from one network to another based on their ip address.
+
+      gateway is the ip address of the router
+
+
+Router jobs: 
+
+    a. NAT (network address translation): is a method of remapping an ip address while they are in transit across a traffic 
+        routing device.
+
+    c. Firewall: prevent accessing to computers in  LAN (local area network) from outside networks(WAN: wide area network),
+        if you want to allow this, you have two options, port forwarding or DMZ
+
+    b. DMZ: DMZ or demilitarized zone is a subnetwork that contains and expose a device to an untrusted network like internet.
+    
+    d. Port forwarding
+
+4. Ethernet is protocol for the communication of the devices in the LAN, first we used Coaxial cables, and now days we use 
+    Twisted pair cable and Fiber optic cable.
+
+5. Gateway and bridges are used to connect multiple Ethernet network together, gateways connect dissimilar network together, while
+    bridges connect similar networks together.

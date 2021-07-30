@@ -1,0 +1,146 @@
+0. Wireshark make stream index for each trace file that starts from zero, and each connection has a unique stream index
+
+1. At first in TCP connection there is three way handshake between server and client, first the client sends SYN packet, then the 
+    server send SYN,ACK packet, and at the end the client sends ACK packet
+    (you can check SYN in flag section of the TCP data,)
+
+2. Sequence numbers: 
+
+      sequence numbers are the the number that sends from client to server and vice versa, and shows the order and the size of
+      packets: 
+
+              seq: 1    packet len: 340, next seq number: 341
+      client ---------> server
+
+              seq: 341  packet len: 532, next seq number: 873
+      client ---------> server
+
+  [ATTENTION]
+  each direction has its own sequence number
+
+
+3. acknowledgment numbers are the the number that sends from client to server and vice versa, and shows the sequence number that
+    has received till now: 
+
+    (this is the response from the server for the last example)
+
+            seq: 1  packet len: 234, next seq number: 235, ACK number: 873  (shows that we receive until 873)
+    server -----------> client
+
+
+            seq: 235, packet len: 121, next seq numbet: 356, ACK number: 873 
+    server ------------> client
+
+    ///////////////////////////
+
+            seq: 873, packet len: 20, next seq number: 893, ACK number: 356
+    client -------------> sever
+
+4. receive window size, tells the maximum byte that each side can receive before acknowledgment. it is  2 byte number.
+        this number can be scaled, you can check for Options -> window scale, and the calculated windows size will be 
+        window size * window scale
+        (you can check for window size and calculated window size in TCP handshake)
+[ATTENTION]
+If you miss the handshake, but you know the multiply factor, you can right click on flags and go to protocol preference and
+        use scaling factor to use when not available from handshake
+[ATTENTION]
+This number is not static, sometimes for example the application can't process the data or for other reasons this number maybe 
+less than this.
+
+///////// Wireshark //////////////
+
+5. to use multiple display filters in wireshark you can use or operator, like (tcp or udp)
+
+6. you can use display filter based on ip address: 
+
+        ip.addr == <>
+        ip.src == <>         (packets sends by this ip address)
+        ip.dst == <>            (packets recieved by this ip address)
+
+7. you can use contains filter, to see if packets contain, certain word, for example:
+        
+        tcp contains youtube
+
+8. filter based on ports: 
+
+        tcp port in (24 80)
+
+9. capture filters have different syntax from display filter, here are some examples:
+
+        a. tcp port 443
+
+        b. host 198.168.1.1     (get packets from this ip)
+
+////////// TCP continue ///////
+
+10. What is TCP keep alive:
+        
+        picture a scenario, when a client make a request to the server, and server sends ACK response, in this situation client
+        will wait for the server to process, and to return the actual response, after certain amount of time (for example
+        45 seconds) if the server doesn't respond, the client will send a small packet (for example 64 byte) to the server
+        with [Keep-Alive] flag, this packet is for keeping a connection, if the server responds with [Keep-Alive ACk]
+        the client waits for another 45 seconds, and if it doesn't get the response, it will send another [Keep-Alive]
+
+11. you can see window size scale factor only in handshake, if you miss the handshake, you are going to miss this number
+        but, if you have prior knowledge of window size, you can add it manually in wireshark, you can right click on 
+        TCP header, and protocol preferences and scaling factor to use when not available from capture
+
+12. you can add your variables to your column by right clicking on them and select apply as column
+        
+13. There are different types of MTU(maximun transmission unit) based on different OSI model, here we refer to Ethernet MTU:
+
+        MTU is set per interface, and it is locally. it is not something that negotiated (one interface does not know about the 
+        MTU of other interface)
+
+        IP MTU: on a interface you can also configure the maximum transmission unit of ip packet
+
+14. MSS is a value at TCP layer (Transport layer(level 4)) for example client tells the server that I only want to see 1460 byte
+        packets encapsulated, not counting TCP IP or Ethernet overhead, so when you add TCP header (20 byte) and IP header 
+        (20 byte)
+
+15. TCP FINS and RST (reset):
+        TCP FINS is for shuting down the connection when the server or client mean to shut it down, for example after the 
+        client has done its job with server or after some idle times, it sends [FINS, ACK] to the server, and the server 
+        will sends back the FIN
+
+        but in contrast, RESET can happened in any time in TCP connection, it happened in abrupt connection loss, 
+
+16. TCP SACK (selective acknowledgment) it for the situation when some packets are missed and you don't want to send the whole
+        stream again, for example if you have 5 packets with 100 byte:
+
+        (client send these 5 packets)        ----    ----    ----    ----    ----    
+        (the first two received successfuly and the 
+        the server return ACK 201)
+        (but the third one misses)
+        (server usese TCP options and sends ACK 201(duplicate)
+        SACK left edge (301)
+        SACK right edge (501))
+
+        in this way server tells the client about the missed package
+        it is possible that SACK right edge grows because of getting new packets, but not the ones that are missing.
+        (you can see if SACK is premitted in the handshake in the option part)
+
+17. If you see delta column in wireshark, this delta is not in a single conversation, it is just a delta time between each packet
+        in the captured data, if you want to capture the delta time in single conversation, find one of the packets of the 
+        conversation, and go to TCP details, and in timestamps section apply Time since previous fram in this TCP stream as a 
+        column.
+
+        [ATTENTION]
+        remember direction of the delays is important, client to server can have delay, for example if you want to type your
+        passwords, this operation can take time, but delays from server to client can concerns us.
+
+18. TCP duplicate acknowledgment (DUP ACK)
+
+        [ATTENTION]
+        If you see repeating ack number, but wireshark doesn't count it as a DUP ACK, because it is simply update in window size
+
+        [ATTENTION]
+        normally before retransmission of the missed packet, you can see round trip time, because the server gets the dup ack of 
+        the client
+
+19. What is TCP No-Operation option?
+        if you check your TCP header, you can see Header length, for example:
+
+                1000 .... = Header length: 32 byte (8)          (it always multiply by 4)
+        
+        so each TCP option should be length of 4, and if it is not 4 scale, we TCP no option as a 1 byte to make it scale of 4
