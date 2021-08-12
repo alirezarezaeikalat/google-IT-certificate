@@ -684,7 +684,7 @@ It should be called out that interior gateway protocols will route these address
       
       b. ACK (acknowledgment): A value of one in this field shows that the acknowledgment field should be examined.
 
-      c. PSH (push): This means, that the transmitting device wants the receiving device to push currently- buffered data to the
+      c. PSH (push): This means, that the transmitting device wants the receiving device to push currently --buffered data-- to the
             application on the receiving end as soon as possible. A buffer is a computing technique, where a certain amount of data
             is held somewhere, before being sent somewhere else. This has lots of practical applications. In terms of TCP, it's used
             to send large chunks of data more efficiently. By keeping some amount of data in a buffer, TCP can deliver more meaningful
@@ -759,7 +759,7 @@ Socket states varies from operating system to operating system.
 69. In connection less protocols: you just add the destinatio port and send the data. for example in video streaming, loss of 
       several segments it is not that important, so we use UDP for sending data.
 
-70. Port number is 16 bits number this range has been split up by the IANA (Internet Assigned Numbers Authority) into independent 
+70. Port number is 16 bits number this range has been split up by the --IANA (Internet Assigned Numbers Authority)-- into independent 
       sections:
 
       a. Port 0 isn’t in use for network traffic, but it’s sometimes used in communications taking place between different programs
@@ -775,7 +775,7 @@ Socket states varies from operating system to operating system.
             many databases listen on. Registered ports are sometimes officially registered and acknowledged by the IANA, but not 
             always. On most operating systems, any user of any access level can start a program listening on a registered port.
 
-      d. ports 49152-65535. These are known as private or ephemeral ports. Ephemeral ports can’t be registered with the IANA and
+      d. ports 49152-65535. These are known as --private or ephemeral-- ports. Ephemeral ports can’t be registered with the IANA and
             are generally used for establishing outbound connections. You should remember that all TCP traffic uses a destination 
             port and a source port. When a client wants to communicate with a server, the client will be assigned an ephemeral port
             to be used for just that one connection, while the server listens on a static system or registered port.
@@ -789,4 +789,176 @@ no modern operating system will ever use a system port for outbound communicatio
 
 ///////////////////// Application layer /////////////////////
 
-71. all the data in the packets of  application layer will be in the payload section of the transport layer.
+71. all the data in the packets of application layer will be in the payload section of the transport layer.
+
+//////////////////// Network services //////////////////////
+
+72. --DNS (Domain Name System)--: A global and highly distributed network service that --resolves-- strings of letters into IP addresses.
+
+[ATTENTION]
+DNS lets you have a distributed data center, for example you have data center in Newyork that has a IP address 184.23.42.10 you can 
+      resolve it to wheather.com, and another data center in Iran with IP address of 143.23.16.18 that resolve to the same domain 
+      name
+
+72. This process of using DNS to turn domain names to IP addresses known as --name resolution--.
+
+73. There are five primary types of DNS servers:
+
+      a. Caching name servers: Caching and recursive name servers are generally provided by an ISP or your local networking.
+            most caching name servers are also recursive name servers. All domain names in global DNS system have a --TTL--
+            or --time to live--. time to live is a value in --seconds-- that can be configured by the owner of the domain, that 
+            tell name servers how long they can cache an entry.
+
+      b. Recursive name servers: perform full DNS resolution requests recursively between other servers.
+
+      c. Root name servers
+
+      d. TLD name servers
+
+      e. Authoritative name servers
+
+
+
+74. Complete recursive resolution process: 
+
+      a. The first step is always to contact the root name server, there are --13 root name servers--. 
+            --they're responsible for directing queries toward the appropriate TLD name server--. In the past, these 13 root 
+            name servers were distributed to very specific geographic regions. but today, they are distributed across globe via 
+            --anycast--. any cast is A technique that's used to route traffic to different destinations depending on factors like 
+            location, congestion, or link health. Today, there are --not 13 physical root servers-- across globe, actually there are 13 
+            authorities that provide route name lookups as a service..
+      
+      b. The root name server will respond to DNS lookup with the --TLD (Top Level Domain) name server-- that should query.
+            for each TLD there is one TLD name server. It doesn't mean there is only one pysical name server. it's most likely a 
+            global distribution of any cast accessible servers responsible for each TLD
+
+
+      c. The TLD name servers will respond again with a redirect, this time informing the computer performing the name lookup with
+            what authoritative name server to contact. Authoritative name servers are responsible for the last two parts of any 
+            domain name which is the resolution at which a single organization may be responsible for DNS lookups.
+      
+      d. the DNS lookup could be redirected at the authoritative server which would finally provide the actual IP of the server 
+            in question
+
+[ATTENTION]
+DNS is a great example of --application layer service-- that uses UDP instead of TCP. because the number of TCP packets in a recursive
+      DNS lookup will be to much (44), and most of the time the response DNS name servers will be fit into one UDP packet.
+DNS uses --port 53--.
+
+75. --Resource record type--: DNS in practice operates with a set of defined --resource record types--. These allow for different 
+      kinds of DNS resolutions to take place:
+      
+      a. --A record--: An A record is used to point a certain domain name at IPv4 IP address. 
+            [ATTENTION]
+            In its basic use, a single A record is configured for a single domain name. But a single domain name may have multiple 
+            A records. This allows for technique known as --DNS round robins-- to balance traffic between multiple IP addresses.
+
+            Example:
+            Let's say we're in charge of a domain name www.microsoft.com. Microsoft is a large company and their website likely sees
+            a lot of traffic. To help balance this traffic across multiple servers. We configure four A records for www.microsoft.com
+            at the authoritative name server for the microsoft.com domain. We'll use the IPs 10.1.1.1, 10.1.1.2, 10.1.1.3, and 
+            10.1.1.4. When the DNS Resolver performs a look-up of www.microsoft.com, all four IPs would be returned in the order first
+            configured: 10.1 1.1, followed by 10.1.1.2, followed by 10.1.1.3, and finally, 10.1.1.4. The DNS resolving computer would
+            know that it should try to use the first entry, 10.1.1.1, but it knows about all four just in case a connection to 
+            10.1.1.1 fails. The next computer to perform a look up for www.microsoft.com would also receive all four IPs in the 
+            response, but the ordering will have changed. The first entry would be 10.1.1.2, followed by 10.1.1.3, followed by 
+            10.1.1,4, and finally, 10.1.1.1 would be last on that list. This pattern will continue for every DNS resolution attempt, 
+            cycling through all of the A records configured and balancing the traffic across these IPs
+
+      b. --AAAA record--: It is very similar to A record, instead it return the IPv6
+
+      c. --CNAME (canonical name) record--: CNAME record is used to redirect traffic from one domain to another.
+            configure CNAME record for microsoft.com that resolves to www.microsoft.com.
+
+      [ATTENTION]
+      CNAMEs are really useful because they ensure you only have to change the canonical IP address of a server in one place
+
+      d. --MX (mail exchange) record--: This record is used to deliver email to the correct server.
+
+      e. --SRV (service record)--: It is used to define the location of various services. MX is only for mail servers, SRV record, 
+            can be defined to return the specifics of many different service types.
+      
+      f. --TXT (text) record--: This record orinally used for associating some descriptive text with a domain name for human 
+            consumption. But over the years as the Internet and services that run on it have become more and more complex,
+            the text record has been increasingly used to convey additional data intended for other computers to process.
+
+76. Each domain name has 3 parts, for example www.google.com:
+
+      a. The last part is known as TLD (Top Level Domain). Administration and definition of TLDs is handled by a non profitable 
+            organization known as ICANN (The Internet Corporation for Assigned Name and Numbers)
+
+      b. domain: Used to demarcate where controls move from a TLD name server to an authoritative name server.
+
+      c. sometimes referred to as a host name if it's been assigned to only one host.
+
+[ATTENTION]
+DNS can technically support up to --127 levels of domain-- in total for a single --fully qualified domain name (FQDN)--.
+
+[ATTENTION]
+Each individual section can only be 63 characters long and a complete FQDN is limited to a total of 255 characters
+
+77. --DNS Zones--: An authoritative DNS server is actually responsible for a specific --DNS zone--. Actually Root name server and 
+      TLD servers are authoritative servers, because each one of them are responsible for a DNS zone. 
+
+      DNS zones are configured in --zone files--: Simple configuration files that are declared all the resource record type
+            for a particular zone.
+      
+      So a zone file has to contain an --SOA, or a Start of Authority resource record declaration--. This SOA record declares the zone 
+      and the name of the name server that is authoritative for it. Along with the SOA record, you'll usually find --NS records-- 
+      which indicate other name servers that may also be responsible for this zone
+
+//////////////////// DHCP ////////////////
+78. You can see all the settings that your DHCP servers assigned to your computer: 
+
+79. You can change the setting of DHCP server, for example you can use Address reservation for your computer, It means that everytime
+      a computer with a specific MAC address connect to the network gets the same IP address.
+
+            Adress Reservation table
+
+            IP address              Device name             MAC address
+
+80. DHCP is a service that is run on a server, such as windows server or linux server, It is also a service that is run on 
+      --routers--
+
+81. DHCP server uses two protocol for ip assignment: 
+
+      a. dynamci allocation
+
+      b. Automatic allocation: it is like dynamic allocation, but it try to give the same ip to the same device if it is possible
+
+      c. Fixed allocation
+
+[ATTENTION]
+DHCP is an --application layer-- protocol, which means it relies on the transport, network, data link and physical layers to operate.
+       But you might have noticed that the entire point of DHCP is to help configure the network layer itself. so how does DHCP 
+       does its job without configuring the network layer?
+
+       --DHCP discovery--: is the process by which a client configured to use DHCP attemps to get network configuration information.
+       the DHCP discovery has 4 steps:
+
+            a. --server discovery--: DHCP clients sends what's known as --DHCP discover message--
+
+                  DHCP listens on --UDP port 67--, and DHCP discover message are always sent --from UDP port 68--
+
+                  So the DHCPDISCOVER message is encapsulated in a UDP datagram with a destination port of 67 and a source port of 68.
+                  This is then encapsulated inside of an IP datagram with a destination IP of 255.255.255.255, and a source IP of 
+                  0.0.0.0, and this will be encapsulate in frame with source MAC address of the client and destination MAC address 
+                  of FF:FF:FF:FF:FF:FF for broadcasting
+            
+            b. --DHCPOFFER-- message will be send from DHCP server to the client. The response would be sent as a DHCPOFFER message with
+                  a destination port of 68, a source port of 67, a destination broadcast IP of 255.255.255.255, and its actual 
+                  IP (for example 192.168.1.1) as the source. Then it will be encapsulate in the frame with the source MAC address of 
+                  the DHCP server and the destination MAC address of the client. this DHCPOFFER message has the the ip that clients 
+                  want, but it is possible that client reject this ip but it is a rare situation.
+            
+            c. --DHCPREQUEST-- message: sends from the client to the DHCP server. Since the IP hasn't been assigned yet, this is
+                   again sent from an IP of 0.0.0.0, and to the broadcast IP of 255.255.255.255.
+            
+            d. --DHCPACK--: This message is again sent to a broadcast IP of 255.255.255.255, and with a source IP corresponding to 
+                  the actual IP of the DHCP server. Again, the DHCP client would recognize that this message was intended for itself
+                  by inclusion of its MAC address in one of the message fields.
+
+[Description]
+At this stage, the computer that's acting as the DHCP client should have all the information it needs to operate in a full fledged
+      manner on the network it's connected to. All of this configuration is known as --DHCP lease-- as it includes an expiration time. 
+      A DHCP lease might last for days or only for a short amount of time
