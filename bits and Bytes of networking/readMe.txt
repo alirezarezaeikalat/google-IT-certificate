@@ -960,5 +960,123 @@ DHCP is an --application layer-- protocol, which means it relies on the transpor
 
 [Description]
 At this stage, the computer that's acting as the DHCP client should have all the information it needs to operate in a full fledged
-      manner on the network it's connected to. All of this configuration is known as --DHCP lease-- as it includes an expiration time. 
+      manner on the network it's connected to. All of this configuration is known as --DHCP lease-- as it includes an --expiration time--. 
       A DHCP lease might last for days or only for a short amount of time
+
+////////////////// NAT (Network Address Translation) //////////////
+
+[ATTENTION]
+82. NAT is used primarily for security and IPv limitations.
+
+83. At its most basic level, NAT is a technology that allows a gateway, usually a router or firewall, to rewrite the source IP of an
+       outgoing IP datagram while retaining the original IP in order to rewrite it into the response.
+
+       The process of hiding the source IP by gateway router known as --IP masquerading--, by usin IP masquerading all the network
+       computers IPs will be hidden from outside world, we call this --one to many NAT--
+
+
+84. It is possible to configure your router to perform NAT for any outbound packet.
+
+
+85. --NAT and transport layer--:
+
+      The problem is how router defines the right machine for inbound traffic after NAT?
+
+            a. The simplest way to do this is by --Port preservation--: A technique where the source port choosen by the client from 
+                  the ephemeral ports (49152 to 65535), used by router to find the right machine.
+
+                  even with the large range of ephemeral ports, it is possible that two computer choose the same source port around 
+                  the same time. In this situation, the router normally selects unused port a random instead.
+            
+            b. port forwarding: A technique where specific destination ports can be configured to always be delivered to specifics 
+                  nodes.
+
+86. --IPv4 exhaustion--: The IANA has been in charge of distributing IP addresses since 1988.
+
+87. The IANA has primarily been responsible with assigning address blocks to the five --regional internet registries or RIRs--
+
+88. The five RIRs are:
+      
+      a. --AFRINIC--, which serves the continent of Africa,
+        
+      b. --ARIN-- which serves the United States, Canada and parts of the Caribbean.
+         
+      c. --APNIC--, which is responsible for most of Asia, Australia and New Zealand and Pacific Island nations.
+       
+      d. --LACNIC-- which covers Central and South America and any parts of the Caribbean not covered by ARIN. 
+      
+      e. --RIPE--, which serves Europe, Russia and the Middle East and portions of Central Asia. 
+     
+
+89. The two solutions for IPv4 exhaustion is --NAT-- and non-routable address spaces.
+
+/////////////////// VPNs (Virtual Private Networks) //////////////////
+
+90. Businesses have lots of reasons to want to keep their network secure, and they do this by using some of the technologies 
+      we've already discussed --firewalls--, --Nat--, --use of non routable address space--, things like that. Organizations often 
+      have  proprietary information that needs to remain secure. Network services that are only intended for employees to access and 
+      other things. One of the easiest ways to keep network secure is to use various securing technologies, so only devices 
+      physically connected to their local area network can access these resources. But employees aren't always in the office. 
+      They might be working from home or on a business trip, and they might still need access to these resources in order to get 
+      their work done.
+      
+91 That's where VPNs come in. --Virtual private networks-- or VPNs are a technology that allows for the extension of a private or 
+      local network to host that might not work on that same local network
+
+92. VPNs are --tunneling protocols--.
+
+93. Example of using vpn to connect to a business local network:
+
+      a. First lets examine the typical connection in the local network: when you want to send data to another computer in the local 
+            modern network (IP network), you form a typical packet:
+
+                  Ethernet
+                  IP
+                  TCP
+                  data
+      
+      b. for virtual private network, first we assign the IP address to the remote machine as if it is in the local network. The 
+            remote machine sends the data to gateway server instead of the destination machine and wrap the data into:
+
+                  IP
+                  UDP
+                  IP
+                  TCP
+                  data
+            the gateway server remove the IP and UDP part, and assign the proper Ethernet header, and deliver the data to the right
+            machine.
+      
+      we use cryptography for data security when we want to send data in this way, --hashing-- for being sure that data is not altered 
+            and --encrypting-- for keep the data safe. 
+
+[ATTENTION]
+To use VPN you have to configure your network to send data through gateway router for a certain IP
+
+94. Proxy servers acts between client and servers for several benefits:
+
+            a. anonymity
+
+            b. Security
+
+            c. Content filtering
+
+            d. Increased performance
+
+[ATTENTION]
+Proxy is just a concept. There are lots of common use case of proxies: 
+
+            a. Web proxy:
+                  In the past we can use Web proxies for --caching-- but nowdays they are mainly used for content filtering.
+
+            b. Reverse proxy: A service that might appear to be a single server to external clients, but actually represent many
+                  services behind it.
+
+                        1. It is used for example by twitter for --load balancing-- between their physical servers: 
+
+                                    client            reverse proxy           application server 1
+                                                                              application server 2
+                                                                              application server 3
+                                                                                    ....
+                                                                              
+                        
+                        2. 
