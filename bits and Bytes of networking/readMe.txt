@@ -1071,12 +1071,24 @@ Proxy is just a concept. There are lots of common use case of proxies:
             b. Reverse proxy: A service that might appear to be a single server to external clients, but actually represent many
                   services behind it.
 
-                        1. It is used for example by twitter for --load balancing-- between their physical servers: 
+                        It is used for example by twitter for --load balancing-- between their physical servers: 
 
                                     client            reverse proxy           application server 1
                                                                               application server 2
                                                                               application server 3
                                                                                     ....
                                                                               
-                        
-                        2. 
+////////////// History of Internet ///////////////////
+
+95. At first two students from Duke university used the --public telephone network--, --The public Switched Telephone Network or PSTN--
+ that also sometimes referred to as the --Plain Old Telephone Service or POTS-- for connecting computers together.
+ The system they built is known as --USENET--.
+
+96. A dial-up connection uses POTS for data transfer, and gets its name because the connection is established by actually dialing a
+      phone number.
+
+97. Transferring data across a dial-up connection is done through devices called --modems. Modem stands for modulator demodulator--, 
+      and they take data that computers can understand and turn them into audible wavelengths that can be transmitted over POTS
+
+98. Early modems had very low --baud rates--. A baud rate is a measurement of how many bits could be passed across a phone line in a
+      second.
