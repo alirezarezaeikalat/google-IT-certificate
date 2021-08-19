@@ -986,7 +986,7 @@ At this stage, the computer that's acting as the DHCP client should have all the
                   the ephemeral ports (49152 to 65535), used by router to find the right machine.
 
                   even with the large range of ephemeral ports, it is possible that two computer choose the same source port around 
-                  the same time. In this situation, the router normally selects unused port a random instead.
+                  the same time. In this situation, the router normally selects random unused port instead.
             
             b. port forwarding: A technique where specific destination ports can be configured to always be delivered to specifics 
                   nodes.
@@ -1060,7 +1060,7 @@ To use VPN you have to configure your network to send data through gateway route
 
             c. Content filtering
 
-            d. Increased performance
+            d. Increased performance by caching
 
 [ATTENTION]
 Proxy is just a concept. There are lots of common use case of proxies: 
@@ -1153,3 +1153,45 @@ Proxy is just a concept. There are lots of common use case of proxies:
             connects lots of different cable connections to an ISP's core network.
       
       d. --fiber connections--
+
+
+//////////////////////// WAN (Wide Area Network) Technologies /////////////////////
+
+100. Problem statement:
+
+      for example you have a small office, You decide to use --non-routable address space-- for the internal IPs because IP addresses
+      are scarce and expensive. You set up a router and configure it to perform --NAT--. You configure a --local DNS server-- and a
+      --DHCP server-- to make network configuration easier. And of course, for all of this to really work, you sign a contract with
+      an ISP to deliver a link to the Internet to this office, so your users can access the web.
+      May be some sales people will need to connect to resources on the LAN you set up while they're on the road. So you configure
+      a --VPN server-- and make sure the VPN server is accessible via --port forwarding--
+
+      so What if you have a second office in another location that want access to your local resources?????
+
+101. This is where we use --WAN (Wide Area Network)--. A wide area network acts like a single network, but spans across multiple
+      physical locations
+
+[ATTENTION]
+WAN technologies usually require that you contract a link across the Internet with your ISP. This ISP handles sending your data 
+from one site to the other. So it could be like all of your computers are in the same physical location
+
+102. Imagin a network of computers on one side of the country and another network of computers on the other. Each of those networks
+      ends at a demarcation point, which is where the ISP's network takes over. The area between each demarcation point and the 
+      ISP's actual core network is called a --local loop--. This local loop would be something like a T-carrier line or a high 
+      speed optical connection to the provider's local regional office. From there, it would connect out to the ISP's core network
+      and the Internet at large.
+
+103. WANs work by using a number of different protocols at the data link layer to transport your data from one site to another.
+     --In fact, these same protocols are what are sometimes at work at the core of the Internet itself, instead of are more 
+     familiar ethernet--.
+
+104. There are two solutions instead of usin WAN, because usin WAN is expensive: 
+
+      a. --Cloud services--: cloud lets companies outsource all or part of their different pieces of infrastructure to other 
+            companies to manage. For example you can have cloud storage, or have a cloud hosting provider host your email server 
+            for you.
+
+      b. --Point to Pont VPN--: A point-to-point VPN, also called a --site-to-site VPN--, establishes a VPN tunnel between two sites.
+            This operates a lot like the way that a traditional VPN setup lets individual users act as if they are on the network 
+            they're connecting to. It's just that the VPN tunneling logic is handled by network devices at either side, so that users
+            don't all have to establish their own connections.
