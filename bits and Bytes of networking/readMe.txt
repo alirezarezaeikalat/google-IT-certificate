@@ -1092,3 +1092,64 @@ Proxy is just a concept. There are lots of common use case of proxies:
 
 98. Early modems had very low --baud rates--. A baud rate is a measurement of how many bits could be passed across a phone line in a
       second.
+
+99. --Broadband-- has many definitions but in case of internet connectivity, it's used to reffer to any connectivity technology that
+       is not dial-up. They are much faster than dial-up connections and they are always on.
+       There are four common broadband solutions available today:
+      
+      a. --T-carrier technologies-- were first invented by AT&T in order to provision a system that allowed lots of phone calls to
+             travel across a single cable
+            
+            Every individual phone call was made over individual pairs of copper wire before Transmission System 1, the first 
+            T-carrier specification, called T1 for short, With the T1 specification, AT&T invented a way to carry up to 
+            --24 simultaneous phone calls across a single piece of twisted pair copper--. Years later, this same technology was 
+            repurposed for data transfers.
+            Each of 24 telephone channel was cable of transmitting --64 kilobits--, making a single T1 line capable of transmitting data
+            at --1.544 megabits-- per second
+
+            More improvements to the T1 line were made by developing a way of multiple T1s to act as a single link. So a --T3 line--
+            is 28 T1s, all multiplexed, achieving a total throughput speed of 44.736 megabits per second
+
+      b. --digital subscriber lines or DSL--: DSL operates on public telephone network but at a frequency range that didn't 
+            interfere with normal phone calls.
+
+            like dial-ups modems, DSL technologies also use their own modems. But, more accurately, they're known as --DSLAMs or 
+            Digital Subscriber Line Access Multiplexers--. Unlike dial-up modems, the they're usually --long-running--. 
+            This means that the connection is generally established when the DSLAM is powered on and isn't torn down until the 
+            DSLAM is powered off.
+            
+            There are lots of DSL technologies available, but they are in a minor way, for a long time the two most common ones were
+            
+            1. --ADSL (Asymetric Digital Subscriber Line)--: The download and upload speed are different. Usually for home users 
+
+            2. --SDSL (Symetric Digital Subscriber Line)--: The download and upload speed are the same. Usually for the datacenters.
+                  most SDSLs have upper bound limit of --1.544 megabits--. Same as T1 technology.
+            
+            3. --HDSL (High Bit Rate Digital Subscriber Line)--: These are DSL technologies that provide speed more than 1.544 megabits
+                  per second.
+       
+      c. --cable broadband--: The history of both the --telephone and computer networking-- tells a story that started with all 
+            communications being wired. But the recent trend is moving towards more and more of this traffic becoming wireless.
+
+            The history of television follows the opposite path. Originally, all television broadcasts were wireless transmissions
+            sent out by giant television towers and received by smaller antennas in people's homes.
+            Starting in the late 1940s in the United States, the first cable television technologies were developed. At the time,
+            they mainly wanted to provide television access to remote towns and rural homes that were out of range of capabilities
+            of television towers at the time.
+
+            Much like how DSL was developed, cable companies quickly realized that the coaxial cables generally used by cable 
+            television delivery into a person's home were capable of transmitting much more data than what was required for TV 
+            viewing. By using frequencies that don't interfere with television broadcast, cable-based Internet access technologies
+            were able to deliver high speed Internet access across these same cables.
+
+            [ATTENTION]
+            One of the difference between cable broad band technologies and other technologies is something that known as 
+            --Shared bandwidth technology--. In DSL and even dial-ups the connection from your home or business goes directly to
+             what's known as a --Central Office or CO-- and you have a point to point connection.
+
+            [VERY IMPORTANT]
+            Cable Internet connections are usually managed by what's known as a --cable modem--. This is a device that sits at the 
+            edge of a consumer's network and connects it to the --cable modem termination system, or CMTS--. The CMTS is what 
+            connects lots of different cable connections to an ISP's core network.
+      
+      d. --fiber connections--
