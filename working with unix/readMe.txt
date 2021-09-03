@@ -282,6 +282,14 @@ enterprise services that deal with a large number of files (like mail servers) h
 
         >> whoami
 
+45. You can see --logged in users--:
+
+        >> users
+
+        or 
+
+        >> who
+
 -------- File management in linux ----------
 
 42. In unix there are 3 types of files:
@@ -298,9 +306,9 @@ enterprise services that deal with a large number of files (like mail servers) h
 
 43. Unix commands for file management:
 
-        a. --ls--   lists the files and directories in the current directory
+        a. >> ls   lists the files and directories in the current directory
 
-        b. -- ls -l -- :
+        b. >> ls -l :
 
             drwx------@  4 mac  staff   128 Jan 21 15:41 Applications
 
@@ -330,24 +338,24 @@ enterprise services that deal with a large number of files (like mail servers) h
 
 45. Metacharecter: Metacharecters have special meaning in linux. For example, * means 0 or more character, ? means one character.
     
-        ls *.txt
+        >> ls *.txt
 
 46. Hidden files in linux starts with . (dot), Unix programs (like shell) use this files for configuration. to see hidden files use:
 
-        ls -a 
+        >> ls -a 
 47. important hidden files:
 
         .profile: The Broune shell (sh) initializing script
 
-        .kshrc: The Korn shell ( ksh) initialization script
+        .kshrc: The Korn shell (ksh) initialization script
 
-        .cshrc: The C shell ( csh) initialization script
+        .cshrc: The C shell (csh) initialization script
 
         .rhosts: The remote shell configuration file
 
-48. you can use vi editor to create and edit files in unix based OS:
+48. you can use vi editor to create and edit --ordinary files-- in unix based OS:
 
-        vi <filename>       (creates the file)
+        >> vi <filename>       (creates the file)
 
         press i key         (go to edit mode)
 
@@ -387,3 +395,51 @@ enterprise services that deal with a large number of files (like mail servers) h
         rm filename
 
         rm -i filename      (ask for are you sure to delete this file)
+
+---------------- Directory management in Linux --------------
+
+54. You can go to home directory anytime you want: 
+
+        >> cd ~
+
+55. go other users home directory:
+
+        >> cd ~username
+
+56. To determine where you are within filesystem hierarchy:
+
+        >> pwd
+
+57. To see files and directories in the directory:
+
+        >> ls directoryname
+
+58. To create a directory:
+
+        >> mkdir directoryname
+
+59. You can use absolute path in making directories:
+
+        >> mkdir /Users/mac/directoryname
+    
+    If There are not parent directory you will get an error:
+
+        >> mkdir /ghasem/ahmad/ali      (this will give an error)
+    
+    To make parent directories as well use -p flag:
+
+        >> mkdir -p /ghasem/ahmad/ali
+
+60. to remove directory:
+
+        >> rmdir directoryname
+
+61. To change directory: 
+
+        >> cd directoryname
+
+62. change directory name:
+
+        >> mv old new 
+
+62. dot(.) represent current directory and double dot (..) represent parent directory
