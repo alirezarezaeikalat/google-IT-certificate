@@ -271,6 +271,17 @@ enterprise services that deal with a large number of files (like mail servers) h
     all the data structures concatenated in one block group (the first one) frees up more contiguous data blocks on other block groups
     within each flex block group.
             
+---------- Getting started in Linux ----------
+
+42. You can see the calendar in lunx with >>cal
+
+43. You can change password for your current user in linux: 
+        >> passwd
+
+44. You can see your current user:
+
+        >> whoami
+
 -------- File management in linux ----------
 
 42. In unix there are 3 types of files:

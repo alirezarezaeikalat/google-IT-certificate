@@ -1163,7 +1163,7 @@ Proxy is just a concept. There are lots of common use case of proxies:
       are scarce and expensive. You set up a router and configure it to perform --NAT--. You configure a --local DNS server-- and a
       --DHCP server-- to make network configuration easier. And of course, for all of this to really work, you sign a contract with
       an ISP to deliver a link to the Internet to this office, so your users can access the web.
-      May be some sales people will need to connect to resources on the LAN you set up while they're on the road. So you configure
+      Maybe some sales people will need to connect to resources on the LAN you set up while they're on the road. So you configure
       a --VPN server-- and make sure the VPN server is accessible via --port forwarding--
 
       so What if you have a second office in another location that want access to your local resources?????
@@ -1195,3 +1195,225 @@ from one site to the other. So it could be like all of your computers are in the
             This operates a lot like the way that a traditional VPN setup lets individual users act as if they are on the network 
             they're connecting to. It's just that the VPN tunneling logic is handled by network devices at either side, so that users
             don't all have to establish their own connections.
+
+///////////// Wireless networks ///////////////
+
+105. The most common way for wireless communication defined by --IEEE 802.11 standards--
+
+106. These set of specifications that we also call --802.11 family-- make up set of technologies we call WiFi
+
+107. Different 802.11 standards generally use the same basic protocol but might operate at differenct --frequency band-- 
+
+108. Wifi technologies uses --radiowaves-- to transfer data, they operates on a few different --frequency bands--
+
+109. Wifi networks operates on a few different frequncy bands. Most commonly 2.4 GHz and 5 GHz
+
+110. There are lots of 802.11 specifications. The most commone ones are:
+      
+      a. 802.11b        b. 802.11a        c. 802.11g        d. 802.11n              e. 802.11ac
+
+[ATTENTION]
+In terms of our networking model, you should think of 802.11 protocols as defining how we operate at both the physical and the
+       data link layers.
+
+111. 802.11 Frame fields:
+
+number of octects:
+                   2             2          6          6           6          2          6       0-7951      4
+            frame control   Duration ID   Address1   Address2   Adress3    Sequence   Address4    Data      FCS
+                                                                           Controle              Payload
+
+      a. --frame control field--: This is 16 bits long field that contains number of subfields that are used to describe how the 
+            frame itself should be proccessed. This includes what version 802.11 is used.
+      
+      b. --Duration field--: It specifies how long the total frame is. So, the receiver knows how long it should expect to have to
+            listen to the transmission
+      
+      c. four address fields: let's first discuss why they are --four fields instead of two--
+
+            The most common wireless architecture uses --wireless access point--, A device that bridges the wireless and wired 
+            portion of the network.
+
+            a large wireless network might have lots of access points. Devices on a wireless network will --associate-- with a 
+            certain access point. This is usually the one they're physically closest to. But, it can also be determined by all
+            sorts of other things like general signal strength, and wireless interference
+
+            There are four address fields, because there needs to be room to indicate which wireless access point should be 
+            processing the frame. So, we'd have our --normal source address field--, which would represent the MAC address of the 
+            sending device. But, we'd also have the --intended destination on the network--, along with a --receiving address-- and a
+            --transmitter address--. The receiver address would be the MAC address of the access point that should receive the frame,
+            and the transmitter address would be the MAC address of whatever has just transmitted the frame.
+
+            [ATTENTION]
+            In lots of situations the destination and receiving address are the same.
+            Source and transmitter addresses are the same.
+            But sometimes depends on wireless network architecture the frames send from one access point to another
+      
+      d. Sequence control field: The sequence control field is 16 bits long and mainly contains a sequence number used to 
+            keep track of ordering the frames.
+
+112. The many different 802.11 specifications -- most commonly b, a, g, n, and ac -- all operate with the same basic data link 
+      protocol. But, how they operate at the physical layer varies. Each of these specifications can have --different ranges--, can
+      use --different modulation techniques--, can have --different transmission bit rates--, operate on 
+      --different frequency bands--, etc.
+
+      Memorizing all of these differences probably isn’t worth the time unless you’re going to be working with many different 
+      types of wireless networks all the time. The most important thing to remember is that networks that operate on the 5Ghz 
+      band are almost always faster, but have less of a range. Most of the 2.4Ghz networks are slightly slower and more 
+      susceptible to interference, but usually cover a larger area
+
+113. There are main few ways that a wireless network can be configured:
+
+      a. --ad-hoc networks--: nodes speaks directly to each other
+
+      b. --Wireless LANS (WLAN)--: one or more access point act as a bridge between a wireless and wired network
+
+             wireless devices  ->   access point  -> Gateway router   -> Internet or wired network
+
+      c. --Mesh networks--: It is kind of hybrid network of two
+
+114. --Wireless channels--: Channels are individual, smaller sections of the overall frequency band used by a wireless network
+            channels help to address colission domains
+
+      [ATTENTION]
+      2.4 GHz and 5 GHz are just shorthand for where these frequency bands actually begin.
+
+      for example for 2.4 GHz
+
+
+      2.400   2.410   2.420  2.430  2.440  2.450  2.460  2.470  2.480  2.490  2.500  
+
+
+      Between these two frequencies (2.4 and 2.5 Ghz) are a number of channels. Since different countries and regions have
+      different --regulatory committees-- for what radio frequencies might be used for what, exactly how many channels are available
+      for use depends on where in the world you are.
+
+      For example, dealing with an 802.11b network, --channel one-- operates at 2412 megahertz, but since the channel width is 22
+      megahertz, the signal really lives on the frequencies between 2401 megahertz and 2423 megahertz.
+
+      Some channels overlap but some are far enough apart so they won't interfere with each other at all.
+
+      Let's look again at 802.11b network running on a 2.4 Gigahertz band. With a channel width of 22 megahertz, channel one with
+      its midpoint at 2412 megahertz, is always completely isolated from channel six with its midpoint at 2437 megahertz and
+      channel 11. 
+      
+      Today, most wireless networking equipment is built to auto sense what channels are most congested. Some access points will
+      only perform this analysis when they start up, others will dynamically change their channel as needed. Between those two 
+      scenarios and manually specified channels, you can still run into situations where you experience heavy channel congestion
+
+
+115. Wireless securtiy:
+
+      - Problem statement: 
+      When you're sending data over a wired link, your communication has a certain amount of inherent privacy. The only devices
+      that really know what data is being transmitted are the two nodes on either end of the link. Someone or some device that
+      happens to be in close proximity can't just read the data. With wireless networking, this isn't really the case, since there
+      aren't cables, just radio transmissions being broadcast through the air, anyone within range could hypothetically intercept
+      any transmissions
+
+      To solve this --Wired Equivalant Privacy (WEP)--: An encryption technology that provides a very low level of privacy.
+      --WEP uses 40 bits key for encryption--, and it can be cracked in couple of minutes.
+      
+      WEP mostly replaced by --WPA encryption algorithm--, WPA uses 128 bits key. Today, mostly we use --WPA2 for encryption.
+      WPA2 uses 256 bits key--
+
+///////////// Cellular networks ///////////
+
+116. Cellular networks are most like Wifi network. One of the biggest differences is that these frequencies can travel over longer
+      distances more easily, usually over many kilometers or miles.
+
+///////////////// Diagnosting connectivity issues /////////
+117. --ICMP or Internet control message protocol-- is used to communicate network issues.
+
+[ATTENTION]
+118. ICMP is mainly used by a --router or remote host-- to communicate why a transmission has failed back to the origin of the
+      transmission.
+
+119. ICMP packet structure:
+
+      (8 bits)     8 bits       16 bits           32 bits
+      type         code        checksum       Rest of header 
+
+                  Payload section
+
+
+      --Type--: specifies what type of message is being delivered. Some examples are -- destination unreachable-- or 
+            -- time exceeded--
+      
+      -- Code --: Indicates a more specific reason for the message than just the type, for example of the destination unreachable
+            type there are individual codes for things like --destination network unreachable--, and 
+            --destination port unreachable--
+      
+
+      --Rest of header--: This field is optionally used by some of the specific types and codes to send more data.
+
+
+      --Payload--: The payload for an ICMP packet exists entirely so that the recipient of the message knows which of their 
+            transmissions cause the error being reported. It contains the entire IP header, and the first 8 bytes of the data
+            payload section of the offending packet
+
+[ATTENTION]
+120. ICPM wasn't developed for human. The point is so that these sorts of error messages can be delivered between networked
+ computers automatically. But there's also a --specific tool-- and --two message types-- that are very useful to human operators.
+
+      tool: ping -> ping let you send a special type of ICMP message, called --Echo request--. An ICMP echo requests essentially
+            just ask destination. Hey are you there? If the destination is up and running and able to communicate on the
+            network, it will send back an ICMP --echo reply-- message type.
+
+      two message types:  --Echo request-- and --echo reply--
+
+121. In all operating systems ping command line has number of flags that you can change its behaviors like the number of echo 
+      requests to send, how large they should be and ...
+
+
+122. Problem statement: 
+
+      With ping, you now have a way to determine if you can reach a certain computer from another one. You can also understand
+      the general quality of the connection. But communications across networks, especially across the Internet usually, cross
+      lots of intermediary nodes. Sometimes, you need a way to determine where in the long chain of router hops the problems
+      actually are.
+
+      - Solution:
+            --Traceroute-- is an awesome utility that lets you discover the paths between two nodes, and gives you information
+             about each hop along the way.
+
+124. --Traceroute-- uses TTL header field to do its job. We know that TTL field is decremented by one, by every router that
+      forwards the packet. When the TTL field reaches zero, the packet is discarded and an ICMP Time Exceeded message is sent
+      back to the originating host. Traceroute uses the TTL field by first setting it to one for the first packet, then two 
+      for the second, three for the third and so on. By doing this clever little action, traceroute makes sure that the 
+      very first packet sent will be discarded by the first router hop. This results in an ICMP Time Exceeded message, 
+      the second packet will make it to the second router, the third will make it to the third, and so on. This continues 
+      until the packet finally makes it all the way to its destination. For each hop, traceroute will send three 
+      identical packets.
+
+125. On each line, you'll see the number of the hop and the round trip time for all three packets. You will also see the 
+      IP of the device at each hop, and a host name if traceroute can resolve one. On Linux and MacOS, traceroute sends --UDP
+      packets to very high port numbers--. On Windows, the command has a shortened name --tracert--, and defaults to using ICMP 
+      echo request
+
+126. Two more tools that are similar to traceroute are --mtr-- on Linux and MacOS and --pathping-- on Windows
+
+127. You can use some tools for checking connectivity at --Transport layer-- or testing ports:
+
+      a. --Netcat-- on Linux and Mac OS:
+
+            >> nc google.com 80
+
+            If the connection fails, the command will exit. If it succeeds, you'll see a blinking cursor, waiting for more input.
+            This is a way for you to actually send application layered data to the listening service from your own keyboard
+
+            If you're really only curious about the status of a report, you can issue the command, with a -z flag, which stands
+            for Zero Input/Output Mode
+
+            >> nc -z google.com 80
+
+            -v is also used for verbose mode:
+
+            >> nc -v google.com 80
+
+
+      b. --Test-NetConnection-- on Windows:
+
+            >> Test-NetConnection google.com    (This will also shows the info about data link layer)
+
+            >> Test-NetConnection  -ComputerName google.com -port 80
