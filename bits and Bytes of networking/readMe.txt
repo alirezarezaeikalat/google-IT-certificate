@@ -12,7 +12,7 @@
       2       Data link         Ethernet, Wifi   Frames                 MAC addresses
 
       1       Physical          10 Base T,
-                                802.11            Btis                    n/a
+                                802.11            Bits                    n/a
 
 3.  a) Physical layer:
 
@@ -25,7 +25,7 @@
       at this layer we introduce our first protocols.
       This layer is responsible for --defining a common way to interpreting these signals--, so network devices can communicate.
 
-      There are lots of protocols at this layer, but the most common one is --Ethernet--, beyod --specifing physical layer attributes--
+      There are lots of protocols at this layer, but the most common one is --Ethernet--, beyond --specifing physical layer attributes--
       The Ethernet standards also define a protocol --responsible for getting data to nodes on the same network-- or link.
 
 5.  c) Network layer (internet):
@@ -49,7 +49,7 @@
 
       There are lot of protocols at this layer, and these protocols are applications specific.
 
-8. In addition to TCP / IP 5 layer model, we have another well known model Open System Interconnection (OSI) model.
+8. In addition to TCP / IP 5 layer model, we have another well known model --Open System Interconnection (OSI) model--.
 
 
 9. Cables connect different devices to each other and allowing data to be transmitted over them.
@@ -85,7 +85,7 @@
 
       [ATTENTION]
       routers store internal tables containing information about how to route traffic between lots of networks all around the world.
-      usually home of office routers don't have very detailed routing tables. The purpose of these routers is to send traffic from
+      usually home or office routers don't have very detailed routing tables. The purpose of these routers is to send traffic from
       inside of the network to the ISP router.
 
       --Core routers-- at ISPs have much more detailed routing tables, have to deal with much more traffic, and make decision about
@@ -153,7 +153,8 @@ we have two problem:
 
 26. A --unicast transmission-- is always meant for just one receiving address. At the ethernet level this is done by looking
       at a --special bit in the destination MAC address. If the --least significant bit in the first octet-- of a destination 
-      address is set to --zero--, it means the ethernet frame is intended only for the destination address.
+      address is set to --zero-- (first octect means from left, and least significant means the right one), it means the ethernet
+      frame is intended only for the destination address.
 
 [ATTENTION]
 This means it would be sent to all devices on the collision domain, but only actually received and process by the intended destination.
@@ -180,6 +181,11 @@ this means --similarlly-- it would sent to all devices on the collision domain, 
 Almost all sections of an Ethernet frame are --mandatory-- and most of them have a --fixed size--.
 
 31.-- Ethernet frames sections--:
+
+      0                 8                    14                         20                 24
+           preamable       Dest MAC address         Source MAC address         VLAN
+               2
+      Ether type           
 
       a. --preamable--: A --preamble-- is 8 bytes (64 bits) long, and can itself be split in two parts.
       
@@ -208,8 +214,8 @@ Almost all sections of an Ethernet frame are --mandatory-- and most of them have
       f. --payload--: In networking term, payload is the actual data being transported. which is everything that is not header.
             can be anywhere from 46 to 1500 bytes long. --this contains data from all the higher levels--.
       
-      g. --frame check sequence (FCS)--:  4 bytes (32 btis) number that represents a --checksum (hash sum or hash value) value-- for the entire
-             frame.
+      g. --frame check sequence (FCS)--:  4 bytes (32 btis) number that represents a --checksum (hash sum or hash value) value-- for 
+            the entire frame.
 
             This --check sum value-- is calculated by performing what's known as --cyclical redundancy check-- against the frame.
 
@@ -424,7 +430,7 @@ each layer packet payload contains all the infromation (including payload and he
 
 
 41. Let's say we want to send some data to the IP address 10.20.30.40. It might be the case that this destination doesn't have an 
-      entry in the --ARP table--. When this happens, the node that wants to send data send a --broadcast ARP message-- to the 
+      entry in the --ARP table--. When this happens, the node that wants to send data, send a --broadcast ARP message-- to the 
       Mac broadcast address, which is all F's. These kinds of broadcasts ARP messages are delivered to all computers on the local
       network. When the network interface that's been assigned an IP of 10.20.40 receives this ARP broadcast, it sends back what's 
       known as an ARP response. This response message will contain the MAC address for the network interface in question.
@@ -474,7 +480,7 @@ each layer packet payload contains all the infromation (including payload and he
 subnet mask:      11111111     11111111         11111111       00000000             (255.255.255.0)
 
                   we also shows subnet mask with this notation: 9.100.100.100/24     (24 is the number of ones)
-                  (CIDR notation or slash notation)
+                  (--CIDR notation-- or --slash notation--)
 
 [ATTENTION]
 48. Each subnetwork has a constant part, this constant part defined with subnet mask and we call part of this constant part subnet id
@@ -662,9 +668,9 @@ It should be called out that interior gateway protocols will route these address
                                                 Data payload(varies)
       
       a. sequence number: this is a 32 bits number that's used to keep track of where in a sequence of TCP segments this one is 
-            expected to be.
+            expected to be, --for example the first sequence number after syn, ack would be 1--.
       
-      b. Acknowledgment number: is the number of the next expected segment.
+      b. Acknowledgment number: is the seqence number of the next expected segment.
 
       c. Control flags: we will discuss these later.
       
@@ -762,7 +768,7 @@ Socket states varies from operating system to operating system.
 70. Port number is 16 bits number this range has been split up by the --IANA (Internet Assigned Numbers Authority)-- into independent 
       sections:
 
-      a. Port 0 isn’t in use for network traffic, but it’s sometimes used in communications taking place between different programs
+      a. Port 0 isn't in use for network traffic, but it's sometimes used in communications taking place between different programs
             on the same computer.
 
       b. Ports 1-1023: are referred to as --system ports--, or sometimes as “well-known ports.” These ports represent the official 
@@ -775,15 +781,15 @@ Socket states varies from operating system to operating system.
             many databases listen on. Registered ports are sometimes officially registered and acknowledged by the IANA, but not 
             always. On most operating systems, any user of any access level can start a program listening on a registered port.
 
-      d. ports 49152-65535. These are known as --private or ephemeral-- ports. Ephemeral ports can’t be registered with the IANA and
+      d. ports 49152-65535. These are known as --private or ephemeral-- ports. Ephemeral ports can't be registered with the IANA and
             are generally used for establishing outbound connections. You should remember that all TCP traffic uses a destination 
             port and a source port. When a client wants to communicate with a server, the client will be assigned an ephemeral port
             to be used for just that one connection, while the server listens on a static system or registered port.
 
 [ATTENTION]
-Not all operating systems follow the ephemeral port recommendations of the IANA. In this lesson, we’ll continue to assume that
-the ephemeral ports used for outbound connections consist of the ports 49152 through 65535. But it’s important to know that this
-exact range can vary depending on the platform you’re working on. Sometimes portions of the registered ports range are used, but 
+Not all operating systems follow the ephemeral port recommendations of the IANA. In this lesson, we'll continue to assume that
+the ephemeral ports used for outbound connections consist of the ports 49152 through 65535. But it's important to know that this
+exact range can vary depending on the platform you're working on. Sometimes portions of the registered ports range are used, but 
 no modern operating system will ever use a system port for outbound communication.
 
 
@@ -793,7 +799,8 @@ no modern operating system will ever use a system port for outbound communicatio
 
 //////////////////// Network services //////////////////////
 
-72. --DNS (Domain Name System)--: A global and highly distributed network service that --resolves-- strings of letters into IP addresses.
+72. --DNS (Domain Name System)--: A global and highly distributed network service that --resolves-- strings of letters into IP 
+      addresses.
 
 [ATTENTION]
 DNS lets you have a distributed data center, for example you have data center in Newyork that has a IP address 184.23.42.10 you can 
@@ -813,7 +820,7 @@ DNS lets you have a distributed data center, for example you have data center in
 
       c. Root name servers
 
-      d. TLD name servers
+      d. TLD name servers (TLD like .com)
 
       e. Authoritative name servers
 
@@ -825,8 +832,8 @@ DNS lets you have a distributed data center, for example you have data center in
             --they're responsible for directing queries toward the appropriate TLD name server--. In the past, these 13 root 
             name servers were distributed to very specific geographic regions. but today, they are distributed across globe via 
             --anycast--. any cast is A technique that's used to route traffic to different destinations depending on factors like 
-            location, congestion, or link health. Today, there are --not 13 physical root servers-- across globe, actually there are 13 
-            authorities that provide route name lookups as a service..
+            location, congestion, or link health. Today, there are --not 13 physical root servers-- across globe, actually there 
+            are 13 authorities that provide route name lookups as a service..
       
       b. The root name server will respond to DNS lookup with the --TLD (Top Level Domain) name server-- that should query.
             for each TLD there is one TLD name server. It doesn't mean there is only one pysical name server. it's most likely a 
@@ -834,8 +841,8 @@ DNS lets you have a distributed data center, for example you have data center in
 
 
       c. The TLD name servers will respond again with a redirect, this time informing the computer performing the name lookup with
-            what authoritative name server to contact. Authoritative name servers are responsible for the last two parts of any 
-            domain name which is the resolution at which a single organization may be responsible for DNS lookups.
+            what --authoritative name server(NS record)-- to contact. Authoritative name servers are responsible for the last two 
+            parts of any domain name which is the resolution at which a single organization may be responsible for DNS lookups.
       
       d. the DNS lookup could be redirected at the authoritative server which would finally provide the actual IP of the server 
             in question
@@ -910,13 +917,14 @@ Each individual section can only be 63 characters long and a complete FQDN is li
 //////////////////// DHCP ////////////////
 78. You can see all the settings that your DHCP servers assigned to your computer: 
 
-79. You can change the setting of DHCP server, for example you can use Address reservation for your computer, It means that everytime
-      a computer with a specific MAC address connect to the network gets the same IP address.
+79. You can change the setting of DHCP server, for example you can use --Address reservation-- for your computer, It means 
+      that everytime a computer with a specific MAC address connect to the network gets the same IP address.
 
             Adress Reservation table
 
             IP address              Device name             MAC address
 
+[IMPORTANT]
 80. DHCP is a service that is run on a server, such as windows server or linux server, It is also a service that is run on 
       --routers--
 
@@ -924,17 +932,19 @@ Each individual section can only be 63 characters long and a complete FQDN is li
 
       a. dynamci allocation
 
-      b. Automatic allocation: it is like dynamic allocation, but it try to give the same ip to the same device if it is possible
+      b. Automatic allocation: it is like dynamic allocation, but it try to give the same ip to the same device if it is 
+            possible
 
       c. Fixed allocation
 
 [ATTENTION]
-DHCP is an --application layer-- protocol, which means it relies on the transport, network, data link and physical layers to operate.
+DHCP is an --application layer-- protocol, which means it relies on the transport, network, data link and physical layers to 
+	operate.
        But you might have noticed that the entire point of DHCP is to help configure the network layer itself. so how does DHCP 
        does its job without configuring the network layer?
 
-       --DHCP discovery--: is the process by which a client configured to use DHCP attemps to get network configuration information.
-       the DHCP discovery has 4 steps:
+       --DHCP discovery--: is the process by which a client configured to use DHCP attemps to get network configuration 
+       information. the DHCP discovery has 4 steps:
 
             a. --server discovery--: DHCP clients sends what's known as --DHCP discover message--
 
@@ -960,13 +970,13 @@ DHCP is an --application layer-- protocol, which means it relies on the transpor
 
 [Description]
 At this stage, the computer that's acting as the DHCP client should have all the information it needs to operate in a full fledged
-      manner on the network it's connected to. All of this configuration is known as --DHCP lease-- as it includes an --expiration time--. 
-      A DHCP lease might last for days or only for a short amount of time
+      manner on the network it's connected to. All of this configuration is known as --DHCP lease-- as it includes an 
+      --expiration time--. A DHCP lease might last for days or only for a short amount of time
 
 ////////////////// NAT (Network Address Translation) //////////////
 
 [ATTENTION]
-82. NAT is used primarily for security and IPv limitations.
+82. NAT is used primarily for security and IPv4 limitations.
 
 83. At its most basic level, NAT is a technology that allows a gateway, usually a router or firewall, to rewrite the source IP of an
        outgoing IP datagram while retaining the original IP in order to rewrite it into the response.
@@ -1035,8 +1045,8 @@ At this stage, the computer that's acting as the DHCP client should have all the
                   TCP
                   data
       
-      b. for virtual private network, first we assign the IP address to the remote machine as if it is in the local network. The 
-            remote machine sends the data to gateway server instead of the destination machine and wrap the data into:
+      b. for virtual private network, first we assign the IP address to the remote machine as if it is in the local network.
+             The remote machine sends the data to gateway server instead of the destination machine and wrap the data into:
 
                   IP
                   UDP
@@ -1080,9 +1090,9 @@ Proxy is just a concept. There are lots of common use case of proxies:
                                                                               
 ////////////// History of Internet ///////////////////
 
-95. At first two students from Duke university used the --public telephone network--, --The public Switched Telephone Network or PSTN--
- that also sometimes referred to as the --Plain Old Telephone Service or POTS-- for connecting computers together.
- The system they built is known as --USENET--.
+95. At first two students from Duke university used the --public telephone network--, --The public Switched Telephone Network or
+       PSTN-- that also sometimes referred to as the --Plain Old Telephone Service or POTS-- for connecting computers together.
+      The system they built is known as --USENET--.
 
 96. A dial-up connection uses POTS for data transfer, and gets its name because the connection is established by actually dialing a
       phone number.
@@ -1104,8 +1114,8 @@ Proxy is just a concept. There are lots of common use case of proxies:
             T-carrier specification, called T1 for short, With the T1 specification, AT&T invented a way to carry up to 
             --24 simultaneous phone calls across a single piece of twisted pair copper--. Years later, this same technology was 
             repurposed for data transfers.
-            Each of 24 telephone channel was cable of transmitting --64 kilobits--, making a single T1 line capable of transmitting data
-            at --1.544 megabits-- per second
+            Each of 24 telephone channel was cable of transmitting --64 kilobits--, making a single T1 line capable of transmitting
+            data at --1.544 megabits-- per second
 
             More improvements to the T1 line were made by developing a way of multiple T1s to act as a single link. So a --T3 line--
             is 28 T1s, all multiplexed, achieving a total throughput speed of 44.736 megabits per second
@@ -1377,7 +1387,7 @@ number of octects:
             --Traceroute-- is an awesome utility that lets you discover the paths between two nodes, and gives you information
              about each hop along the way.
 
-124. --Traceroute-- uses TTL header field to do its job. We know that TTL field is decremented by one, by every router that
+124. --Traceroute-- uses --TTL header-- field to do its job. We know that TTL field is decremented by one, by every router that
       forwards the packet. When the TTL field reaches zero, the packet is discarded and an ICMP Time Exceeded message is sent
       back to the originating host. Traceroute uses the TTL field by first setting it to one for the first packet, then two 
       for the second, three for the third and so on. By doing this clever little action, traceroute makes sure that the 
@@ -1386,7 +1396,7 @@ number of octects:
       until the packet finally makes it all the way to its destination. For each hop, traceroute will send three 
       identical packets.
 
-125. On each line, you'll see the number of the hop and the round trip time for all three packets. You will also see the 
+125. On each line, you'll see the --number of the hop and the round trip time for all three packets--. You will also see the 
       IP of the device at each hop, and a host name if traceroute can resolve one. On Linux and MacOS, traceroute sends --UDP
       packets to very high port numbers--. On Windows, the command has a shortened name --tracert--, and defaults to using ICMP 
       echo request
@@ -1417,3 +1427,15 @@ number of octects:
             >> Test-NetConnection google.com    (This will also shows the info about data link layer)
 
             >> Test-NetConnection  -ComputerName google.com -port 80
+
+////////////// DNS ///////////////
+
+128. You can use --nslookup-- CLI to findout about the DNS server:
+
+      nslookup google.com 
+
+129. or you can use nslookup in interactive mode:
+
+      >> nslookup
+
+      

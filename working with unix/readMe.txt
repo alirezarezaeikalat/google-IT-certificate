@@ -443,3 +443,54 @@ enterprise services that deal with a large number of files (like mail servers) h
         >> mv old new 
 
 62. dot(.) represent current directory and double dot (..) represent parent directory
+
+--------------  Permission -------------------
+
+63. Every file and directory in Unix has the following attributes:
+
+    a. Owner permissions − The owner's permissions determine what actions the owner of the file can perform on the file.
+
+    b. Group permissions − The group's permissions determine what actions a user, who is a member of the group that a file 
+        belongs to, can perform on the file.
+
+    c. Other (world) permissions − The permissions for others indicate what action all other users can perform on the file.
+
+    $ls -l /home/amrood
+    -rwxr-xr--  1 amrood   users 1024  Nov 2 00:10  myfile
+    drwxr-xr--- 1 amrood   users 1024  Nov 2 00:10  mydir
+    
+    (first 3 column for owner, second 3 column for group, third 3 column for other permission)
+
+64. You can change permission with --chmod-- in two ways, --symbolic mode-- and the --absolute mode--:
+
+        a. --symbolic mode--:
+
+            u -> owner permission
+            g -> group permission
+            o -> other permission
+            + -> add 
+            - -> remove
+            = -> set 
+
+            chmod o+wx,u-x,g = rx testfile 
+
+                -> adds write and execute to other permission
+                -> removes execute from owner permission 
+                -> set group permission to r-x
+        
+        b. --absolute mode--:
+
+            Octal Permission Representation:
+
+            0 -> no permission 
+            1 -> execute permission --x
+            2 -> write permission -w-
+            3 -> execute(1) + write(2) permission -wx
+            4 -> read permission r--
+            5 -> read(4) + execute(1) r-x
+            6 -> read(4) + write(2) rw-
+            7 -> read(4) + write(2) + execute(1) rwx
+
+            chmod 755 testfile  (7 -> owner, 5 -> group, 5 -> other)
+
+65. When you create a user account on unix, it assigns a owner ID and group Id to each user.
